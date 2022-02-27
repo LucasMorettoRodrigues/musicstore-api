@@ -1,18 +1,20 @@
 import express from 'express'
 require('dotenv').config()
 
-import productsRouter from './routes/products'
+const app = express()
 
 // DB Connection
 import ConnectDB from './db/connect'
 
-const app = express()
+// routers
+const productsRouter = require('./routes/productRoutes')
+const authRouter = require('./routes/authRoutes')
 
-// Middleware
+
 app.use(express.json())
 
-// Routes
 app.use("/api/v1/products", productsRouter)
+app.use("/api/v1/auth", authRouter)
 
 const port = 5000
 
