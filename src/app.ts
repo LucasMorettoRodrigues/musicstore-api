@@ -1,5 +1,6 @@
 import express from 'express'
 require('dotenv').config()
+const cors = require('cors')
 
 const app = express()
 
@@ -10,7 +11,7 @@ import ConnectDB from './db/connect'
 const productsRouter = require('./routes/productRoutes')
 const authRouter = require('./routes/authRoutes')
 
-
+app.use(cors())
 app.use(express.json())
 
 app.use("/api/v1/products", productsRouter)

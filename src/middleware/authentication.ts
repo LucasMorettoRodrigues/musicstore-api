@@ -12,7 +12,7 @@ export const auth = (req: Request, res: Response, next: NextFunction) => {
 
     try {
         const payload = jwt.verify(token, process.env.JWT_SECRET)
-        req.user = { userID: payload.userID, username: payload.username }
+        req.user = { userId: payload.userId, username: payload.username }
         next()
     } catch (error) {
         throw new Error('Authentication invalid')
