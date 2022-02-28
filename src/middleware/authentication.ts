@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from "express"
-const jwt = require('jasonwebtoken')
+const jwt = require('jsonwebtoken')
 
 
-export const auth = (req: Request, res: Response, next: NextFunction) => {
+const auth = (req: Request, res: Response, next: NextFunction) => {
     const authHeader = req.headers.authorization
     if (!authHeader || !authHeader.startsWith('Bearer')) {
         throw new Error('Authentication invalid')
@@ -18,3 +18,5 @@ export const auth = (req: Request, res: Response, next: NextFunction) => {
         throw new Error('Authentication invalid')
     }
 }
+
+module.exports = auth
