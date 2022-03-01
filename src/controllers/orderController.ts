@@ -10,25 +10,43 @@ export const createOrder = async (req: Request, res: Response) => {
         quantity: number
     }
 
+    type orderProduct = {
+        _id: string,
+        quantity: number,
+        name: string,
+        img: string,
+        price: number
+    }
+
     const cartProducts: product[] = req.body.products
-    let orderProducts: product[] = []
+    let orderProducts: orderProduct[] = []
     let amount: number = 0
 
-    if (cartProducts.length < 1) {
-        throw new Error("Cart is empty.")
-    }
-
-    for (const product of cartProducts) {
-        const dbProduct = await Product.findOne({ _id: product.productId })
-        if (!dbProduct) {
-            throw new Error("Product does not exist in database.")
-        }
-        orderProducts = [...orderProducts, dbProduct]
-        amount += dbProduct.price * product.quantity
-        console.log(orderProducts)
-    }
-
     try {
+
+        if (cartProducts.length < 1) {
+            throw new Error("Cart is empty.")
+        }
+
+        for (const product of cartProducts) {
+            const dbProduct = await Product.findOne({ _id: product.productId })
+
+            if (!dbProduct) {
+                throw new Error("Product does not exist in database.")
+            }
+
+            const orderProduct = {
+                _id: product.productId,
+                quantity: product.quantity,
+                name: dbProduct.name,
+                img: dbProduct.img,
+                price: dbProduct.price
+            }
+
+            orderProducts = [...orderProducts, orderProduct]
+            amount += dbProduct.price * product.quantity
+        }
+
         const order = await Order.create({
             userId: req.user.userId,
             products: orderProducts,
@@ -36,14 +54,8 @@ export const createOrder = async (req: Request, res: Response) => {
         })
 
         res.status(201).json({ order })
-    } catch (error) {
-        if (error instanceof Error) {
-            return res.status(500).json({ err: error.message })
-        }
-        return res.status(500).json({ err: error })
+
+    } catch (error: any) {
+        return res.status(500).json({ err: error.message })
     }
-
-
-
-
 }

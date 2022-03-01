@@ -15,11 +15,8 @@ export const register = async (req: Request, res: Response) => {
         })
 
         res.status(201).json("User created.")
-    } catch (error) {
-        if (error instanceof Error) {
-            return res.status(500).json({ error: error.message })
-        }
-        return res.status(500).json(error)
+    } catch (error: any) {
+        return res.status(500).json({ error: error.message })
     }
 }
 
