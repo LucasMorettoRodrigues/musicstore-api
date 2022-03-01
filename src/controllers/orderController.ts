@@ -43,8 +43,6 @@ export const createOrder = async (req: Request, res: Response) => {
                 price: dbProduct.price
             }
 
-
-
             orderProducts = [...orderProducts, orderProduct]
             console.log(orderProducts);
             amount += dbProduct.price * product.quantity
