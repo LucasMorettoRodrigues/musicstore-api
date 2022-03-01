@@ -43,17 +43,33 @@ export const createOrder = async (req: Request, res: Response) => {
                 price: dbProduct.price
             }
 
+
+
             orderProducts = [...orderProducts, orderProduct]
+            console.log(orderProducts);
             amount += dbProduct.price * product.quantity
         }
 
         const order = await Order.create({
             userId: req.user.userId,
             products: orderProducts,
-            amount: amount
+            amount: amount,
+            shipping: req.body.shipping
         })
 
         res.status(201).json({ order })
+
+    } catch (error: any) {
+        return res.status(500).json({ err: error.message })
+    }
+}
+
+export const getOrders = async (req: Request, res: Response) => {
+
+    try {
+        const orders = await Order.find({ userId: req.user.userId })
+
+        res.status(200).json({ orders })
 
     } catch (error: any) {
         return res.status(500).json({ err: error.message })

@@ -10,6 +10,9 @@ const OrderSchema = new mongoose.Schema({
             productId: {
                 type: String,
             },
+            name: {
+                type: String
+            },
             quantity: {
                 type: Number,
                 default: 1
@@ -25,6 +28,20 @@ const OrderSchema = new mongoose.Schema({
     amount: {
         type: Number,
         required: true
+    },
+    shipping: {
+        address: {
+            type: String
+        },
+        country: {
+            type: String
+        },
+        state: {
+            type: String
+        },
+        city: {
+            type: String
+        }
     },
     status: {
         type: String,
