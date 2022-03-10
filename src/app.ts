@@ -14,6 +14,7 @@ const authentication = require('./middleware/authentication')
 const productsRouter = require('./routes/productRoutes')
 const authRouter = require('./routes/authRoutes')
 const orderRouter = require('./routes/orderRoutes')
+const stripeRouter = require('./routes/stripeRoutes')
 
 app.use(cors())
 app.use(express.json())
@@ -21,6 +22,7 @@ app.use(express.json())
 app.use("/api/v1/products", productsRouter)
 app.use("/api/v1/auth", authRouter)
 app.use("/api/v1/orders", authentication, orderRouter)
+app.use("/api/v1/checkout", authentication, stripeRouter)
 
 const port = 5000
 

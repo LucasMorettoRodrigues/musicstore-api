@@ -18,17 +18,17 @@ export const createOrder = async (req: Request, res: Response) => {
         price: number
     }
 
-    const cartProducts: product[] = req.body.products
+    const cart: product[] = req.body.cart
     let orderProducts: orderProduct[] = []
     let amount: number = 0
 
     try {
 
-        if (cartProducts.length < 1) {
+        if (cart.length < 1) {
             throw new Error("Cart is empty.")
         }
 
-        for (const product of cartProducts) {
+        for (const product of cart) {
             const dbProduct = await Product.findOne({ _id: product.productId })
 
             if (!dbProduct) {
@@ -44,7 +44,6 @@ export const createOrder = async (req: Request, res: Response) => {
             }
 
             orderProducts = [...orderProducts, orderProduct]
-            console.log(orderProducts);
             amount += dbProduct.price * product.quantity
         }
 
@@ -52,10 +51,10 @@ export const createOrder = async (req: Request, res: Response) => {
             userId: req.user.userId,
             products: orderProducts,
             amount: amount,
-            shipping: req.body.shipping
+            address: req.body.address
         })
 
-        res.status(201).json({ order })
+        res.status(201).json( order )
 
     } catch (error: any) {
         return res.status(500).json({ err: error.message })
@@ -67,8 +66,7 @@ export const getOrders = async (req: Request, res: Response) => {
     try {
         const orders = await Order.find({ userId: req.user.userId })
 
-        res.status(200).json({ orders })
-
+        res.status(200).json( orders )
     } catch (error: any) {
         return res.status(500).json({ err: error.message })
     }

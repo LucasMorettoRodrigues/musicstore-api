@@ -1,6 +1,15 @@
 import { Request, Response } from "express"
 const Product = require('../models/Product')
 
+export const getProduct = async (req: Request, res: Response) => {
+    try {
+        const product = await Product.findOne({_id: req.params.id})
+        res.status(200).json(product)
+    } catch (error) {
+        res.status(500).json(error)
+    }
+}
+
 export const getProducts = async (req: Request, res: Response) => {
 
     type queryType = {

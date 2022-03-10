@@ -29,14 +29,14 @@ const OrderSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
-    shipping: {
+    address: {
         address: {
             type: String
         },
         country: {
             type: String
         },
-        state: {
+        line1: {
             type: String
         },
         city: {
