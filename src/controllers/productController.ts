@@ -14,11 +14,20 @@ export const getProducts = async (req: Request, res: Response) => {
 
     type queryType = {
         "category"?: string,
+        "name"?: string
     }
 
     const queryObject: queryType = {}
 
-    if (typeof req.query.category === "string") queryObject.category = req.query.category
+    const { category, name } = req.query
+
+    if(typeof category === "string") {
+        queryObject.category = category
+    }
+
+    if(name) {
+        queryObject.name = { $regex: name, $options: 'i' }
+    }
 
     try {
         const products = await Product.find(queryObject)
