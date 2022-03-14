@@ -24,12 +24,10 @@ app.use("/api/v1/auth", authRouter)
 app.use("/api/v1/orders", authentication, orderRouter)
 app.use("/api/v1/checkout", authentication, stripeRouter)
 
-const port = 5000
-
 const startApp = async () => {
     try {
         await ConnectDB(process.env.MONGO_URI!)
-        app.listen(port, () => console.log(`Server is listening on port ${port}`))
+        app.listen(process.env.PORT || 5000, () => console.log(`Server is listening on port ${process.env.PORT}`))
     } catch (error) {
         console.log(error);
     }
