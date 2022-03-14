@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from "express"
 const jwt = require('jsonwebtoken')
 
-
 const auth = (req: Request, res: Response, next: NextFunction) => {
+
     const authHeader = req.headers.authorization
     if (!authHeader || !authHeader.startsWith('Bearer')) {
         throw new Error('Authentication invalid')
@@ -12,6 +12,7 @@ const auth = (req: Request, res: Response, next: NextFunction) => {
 
     try {
         const payload = jwt.verify(token, process.env.JWT_SECRET)
+
         req.user = { userId: payload.userId, username: payload.username }
         next()
     } catch (error) {
