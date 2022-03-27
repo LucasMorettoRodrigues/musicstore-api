@@ -18,6 +18,7 @@ REST API created for an e-commerce as part of a MERN stack application.
 - Moongose
 - Jason Web Token
 - Stripe
+- Heroku for deployment
 
 ## Database
 - MongoDB Atlas
