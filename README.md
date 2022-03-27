@@ -15,6 +15,7 @@ REST API created for an e-commerce as part of a MERN stack application.
 ## Technologies used
 - TypeScript
 - Node.js
+- Express
 - Moongose
 - Jason Web Token
 - Stripe
